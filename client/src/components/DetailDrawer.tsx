@@ -90,7 +90,7 @@ export function DetailDrawer({ jobId, open, onOpenChange, onRefresh }: DetailDra
               </div>
             </SheetHeader>
 
-            <div className="space-y-6">
+            <div className="space-y-6 p-4 overflow-x-hidden">
               <div>
                 <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                   Case Information
@@ -151,26 +151,28 @@ export function DetailDrawer({ jobId, open, onOpenChange, onRefresh }: DetailDra
 
               <Separator />
 
-              <div>
+              <div className="">
                 <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                   Status
                 </h4>
-                <div className="flex items-center gap-2">
-                  {(["NEW", "ASSIGNED", "TRANSCRIBED", "REVIEWED", "COMPLETED"] as const).map((s, i) => (
-                    <div key={s} className="flex items-center gap-2">
-                      <div
-                        className={`h-2.5 w-2.5 rounded-full ${
-                          s === job.status
-                            ? "bg-primary ring-4 ring-primary/20"
-                            : "bg-muted-foreground/30"
-                        }`}
-                      />
-                      <span className={`text-xs ${s === job.status ? "font-medium text-foreground" : "text-muted-foreground"}`}>
-                        {s}
-                      </span>
-                      {i < 4 && <div className="h-px w-4 bg-border" />}
-                    </div>
-                  ))}
+                <div className="py-2 whitespace-nowrap overflow-x-auto">
+                  <div className="flex items-center gap-2">
+                    {(["NEW", "ASSIGNED", "TRANSCRIBED", "REVIEWED", "COMPLETED"] as const).map((s, i) => (
+                      <div key={s} className="flex items-center gap-2">
+                        <div
+                          className={`h-2.5 w-2.5 rounded-full ${
+                            s === job.status
+                              ? "bg-primary ring-4 ring-primary/20"
+                              : "bg-muted-foreground/30"
+                          }`}
+                        />
+                        <span className={`text-xs ${s === job.status ? "font-medium text-foreground" : "text-muted-foreground"}`}>
+                          {s}
+                        </span>
+                        {i < 4 && <div className="h-px w-4 bg-border" />}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -206,7 +208,7 @@ export function DetailDrawer({ jobId, open, onOpenChange, onRefresh }: DetailDra
         )}
 
         {job && actionView === "reporter" && (
-          <div className="pt-6">
+          <div className="pt-6 px-4">
             <button
               className="text-sm text-muted-foreground hover:text-foreground mb-6"
               onClick={() => setActionView("info")}
@@ -219,7 +221,7 @@ export function DetailDrawer({ jobId, open, onOpenChange, onRefresh }: DetailDra
         )}
 
         {job && actionView === "editor" && (
-          <div className="pt-6">
+          <div className="pt-6 px-4">
             <button
               className="text-sm text-muted-foreground hover:text-foreground mb-6"
               onClick={() => setActionView("info")}
@@ -232,7 +234,7 @@ export function DetailDrawer({ jobId, open, onOpenChange, onRefresh }: DetailDra
         )}
 
         {job && actionView === "status" && (
-          <div className="pt-6">
+          <div className="pt-6 px-4">
             <button
               className="text-sm text-muted-foreground hover:text-foreground mb-6"
               onClick={() => setActionView("info")}

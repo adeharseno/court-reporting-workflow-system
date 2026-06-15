@@ -65,7 +65,7 @@ export function CreateJobDrawer({ open, onOpenChange, onCreated }: CreateJobDraw
           <SheetDescription>Add a new court reporting assignment.</SheetDescription>
         </SheetHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 p-4">
           {error && (
             <div className="text-sm text-destructive bg-destructive/10 rounded-lg px-3 py-2">
               {error}
@@ -78,7 +78,7 @@ export function CreateJobDrawer({ open, onOpenChange, onCreated }: CreateJobDraw
             </h4>
             <div className="space-y-3">
               <div className="space-y-1.5">
-                <label className="text-sm font-medium">Case Name</label>
+                <label className="text-sm font-medium mb-1 block">Case Name</label>
                 <Input
                   value={caseName}
                   onChange={(e) => setCaseName(e.target.value)}
@@ -86,7 +86,7 @@ export function CreateJobDrawer({ open, onOpenChange, onCreated }: CreateJobDraw
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="text-sm font-medium">Duration (minutes)</label>
+                <label className="text-sm font-medium mb-1 block">Duration (minutes)</label>
                 <Input
                   type="number"
                   value={durationMinutes}
@@ -106,7 +106,7 @@ export function CreateJobDrawer({ open, onOpenChange, onCreated }: CreateJobDraw
             </h4>
             <div className="space-y-3">
               <div className="space-y-1.5">
-                <label className="text-sm font-medium">Location</label>
+                <label className="text-sm font-medium mb-1 block">Location</label>
                 <Input
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -114,7 +114,7 @@ export function CreateJobDrawer({ open, onOpenChange, onCreated }: CreateJobDraw
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="text-sm font-medium">Hearing Type</label>
+                <label className="text-sm font-medium mb-1 block">Hearing Type</label>
                 <select
                   value={locationType}
                   onChange={(e) => setLocationType(e.target.value as "physical" | "remote")}
