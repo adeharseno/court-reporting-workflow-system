@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum JobStatus {
+  NEW
+  ASSIGNED
+  TRANSCRIBED
+  REVIEWED
+  COMPLETED
+}
+
+enum LocationType {
+  physical
+  remote
+}
+
+model Reporter {
+  id              Int     @id @default(autoincrement())
+  name            String
+  location        String
+  availability    Boolean @default(true)
+  ratePerMinute   Int     @map("rate_per_minute") // stored in IDR
+
+  jobs Job[]
+
+  @@map("reporters")
+}
+
+model Editor {
+  id      Int    @id @default(autoincrement())
+  name    String
+  flatFee Int    @map("flat_fee") // stored in IDR
+
+  jobs Job[]
+
+  @@map("editors")
+}
+
+model Job {
+  id              Int          @id @default(autoincrement())
+  caseName        String       @map("case_name")
+  durationMinutes Int          @map("duration_minutes")
+  location        String
+  locationType    LocationType @map("location_type")
+  status          JobStatus    @default(NEW)
+
+  reporterId      Int?         @map("reporter_id")
+  reporter        Reporter?    @relation(fields: [reporterId], references: [id])
+
+  editorId        Int?         @map("editor_id")
+  editor          Editor?      @relation(fields: [editorId], references: [id])
+
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @updatedAt @map("updated_at")
+
+  @@map("jobs")
+}
