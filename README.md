@@ -43,6 +43,18 @@ npm run dev:server   # API on http://localhost:3001
 npm run dev:client   # Dashboard on http://localhost:5173
 ```
 
+## Screenshots
+
+![Dashboard](assets/images/Dashboard.png)
+
+![Create Job](assets/images/Create%20New%20Job.png)
+
+![Assign Editor](assets/images/Assign%20Editor.png)
+
+![Update Status](assets/images/Update%20Status.png)
+
+![Payment](assets/images/Payment%20Details.png)
+
 ## Project structure
 
 ```
