@@ -8,7 +8,10 @@
     "jsx": "react-jsx",
     "noEmit": true,
     "outDir": null,
-    "rootDir": null
+    "rootDir": null,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }
