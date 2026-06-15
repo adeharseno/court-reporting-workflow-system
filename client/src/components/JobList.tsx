@@ -18,8 +18,8 @@ export function JobList({ refreshTrigger, onSelectJob }: JobListProps) {
     setLoading(true);
     setError("");
     try {
-      const result = await api.jobs.list();
-      setJobs(result.data);
+      const jobs = await api.jobs.list();
+      setJobs(jobs);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Failed to load jobs");
     } finally {

@@ -4,7 +4,7 @@
   "private": true,
   "workspaces": ["server", "client"],
   "scripts": {
-    "dev:server": "npm run dev -w server",
+    "dev:server": "tsx watch server/src/index.ts",
     "dev:client": "npm run dev -w client",
     "db:seed": "npx tsx prisma/seed.ts"
   },

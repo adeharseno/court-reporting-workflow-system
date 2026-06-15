@@ -48,7 +48,7 @@ export const api = {
   },
   jobs: {
     list: (page = 1, limit = 20) =>
-      apiFetch<import("./types.js").PaginatedResult<import("./types.js").Job>>(
+      apiFetch<import("./types.js").Job[]>(
         `/jobs?page=${page}&limit=${limit}`,
       ),
     get: (id: number) =>
