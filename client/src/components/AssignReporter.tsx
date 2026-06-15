@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { api, ApiError } from "../api.js";
 import type { Reporter, Job } from "../types.js";
-import styles from "./ActionForm.module.css";
+import { Button } from "@/components/ui/button";
 
 interface AssignReporterProps {
   job: Job;
@@ -20,8 +20,7 @@ export function AssignReporter({ job, onAssigned, onClose }: AssignReporterProps
     api.reporters.list().then((data) => {
       const available = data.filter((r) => {
         if (!r.availability) return false;
-        if (job.locationType === "physical" && r.location !== job.location)
-          return false;
+        if (job.locationType === "physical" && r.location !== job.location) return false;
         return true;
       });
       setReporters(available);
@@ -47,20 +46,23 @@ export function AssignReporter({ job, onAssigned, onClose }: AssignReporterProps
     }
   };
 
-  if (loading) return <p className={styles.info}>Loading reporters...</p>;
+  if (loading) return <p className="text-sm text-muted-foreground py-2">Loading reporters...</p>;
 
   return (
-    <div className={styles.form}>
-      {error && <p className={styles.error}>{error}</p>}
+    <div className="space-y-4">
+      {error && (
+        <div className="text-sm text-destructive bg-destructive/10 rounded-lg px-3 py-2">{error}</div>
+      )}
       {reporters.length === 0 ? (
-        <p className={styles.info}>No available reporters for this job.</p>
+        <p className="text-sm text-muted-foreground">No available reporters for this job.</p>
       ) : (
         <>
-          <label className={styles.label}>
+          <label className="flex flex-col gap-1.5 text-sm font-medium">
             Select reporter:
             <select
               value={selectedId ?? ""}
               onChange={(e) => setSelectedId(Number(e.target.value))}
+              className="rounded-lg border border-input bg-background px-3 py-2 text-sm"
             >
               {reporters.map((r) => (
                 <option key={r.id} value={r.id}>
@@ -69,17 +71,11 @@ export function AssignReporter({ job, onAssigned, onClose }: AssignReporterProps
               ))}
             </select>
           </label>
-          <div className={styles.actions}>
-            <button
-              className={styles.primary}
-              disabled={submitting || !selectedId}
-              onClick={handleSubmit}
-            >
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" size="sm" onClick={onClose}>Cancel</Button>
+            <Button size="sm" disabled={submitting || !selectedId} onClick={handleSubmit}>
               {submitting ? "Assigning..." : "Assign Reporter"}
-            </button>
-            <button className={styles.secondary} onClick={onClose}>
-              Cancel
-            </button>
+            </Button>
           </div>
         </>
       )}

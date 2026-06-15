@@ -20,6 +20,12 @@ export const jobService = {
     return prisma.job.create({ data });
   },
 
+  async listAll() {
+    return prisma.job.findMany({
+      include: { reporter: true, editor: true },
+    });
+  },
+
   async listJobs(page: number, limit: number) {
     const skip = (page - 1) * limit;
     const [data, total] = await Promise.all([

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { api, ApiError } from "../api.js";
 import type { Editor, Job } from "../types.js";
-import styles from "./ActionForm.module.css";
+import { Button } from "@/components/ui/button";
 
 interface AssignEditorProps {
   job: Job;
@@ -41,20 +41,23 @@ export function AssignEditor({ job, onAssigned, onClose }: AssignEditorProps) {
     }
   };
 
-  if (loading) return <p className={styles.info}>Loading editors...</p>;
+  if (loading) return <p className="text-sm text-muted-foreground py-2">Loading editors...</p>;
 
   return (
-    <div className={styles.form}>
-      {error && <p className={styles.error}>{error}</p>}
+    <div className="space-y-4">
+      {error && (
+        <div className="text-sm text-destructive bg-destructive/10 rounded-lg px-3 py-2">{error}</div>
+      )}
       {editors.length === 0 ? (
-        <p className={styles.info}>No editors available.</p>
+        <p className="text-sm text-muted-foreground">No editors available.</p>
       ) : (
         <>
-          <label className={styles.label}>
+          <label className="flex flex-col gap-1.5 text-sm font-medium">
             Select editor:
             <select
               value={selectedId ?? ""}
               onChange={(e) => setSelectedId(Number(e.target.value))}
+              className="rounded-lg border border-input bg-background px-3 py-2 text-sm"
             >
               {editors.map((e) => (
                 <option key={e.id} value={e.id}>
@@ -63,17 +66,11 @@ export function AssignEditor({ job, onAssigned, onClose }: AssignEditorProps) {
               ))}
             </select>
           </label>
-          <div className={styles.actions}>
-            <button
-              className={styles.primary}
-              disabled={submitting || !selectedId}
-              onClick={handleSubmit}
-            >
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" size="sm" onClick={onClose}>Cancel</Button>
+            <Button size="sm" disabled={submitting || !selectedId} onClick={handleSubmit}>
               {submitting ? "Assigning..." : "Assign Editor"}
-            </button>
-            <button className={styles.secondary} onClick={onClose}>
-              Cancel
-            </button>
+            </Button>
           </div>
         </>
       )}

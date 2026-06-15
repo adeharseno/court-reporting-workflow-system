@@ -1,5 +1,4 @@
 import { useEffect, useRef, type ReactNode } from "react";
-import styles from "./Modal.module.css";
 
 interface ModalProps {
   open: boolean;
@@ -24,20 +23,23 @@ export function Modal({ open, title, onClose, children }: ModalProps) {
 
   return (
     <div
-      className={styles.overlay}
       ref={overlayRef}
+      className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center"
       onClick={(e) => {
         if (e.target === overlayRef.current) onClose();
       }}
     >
-      <div className={styles.modal}>
-        <div className={styles.header}>
-          <h3>{title}</h3>
-          <button className={styles.closeBtn} onClick={onClose}>
+      <div className="bg-card rounded-xl shadow-xl min-w-[360px] max-w-[480px] w-[90%] max-h-[80vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-5 py-4 border-b">
+          <h3 className="text-base font-semibold">{title}</h3>
+          <button
+            onClick={onClose}
+            className="text-muted-foreground hover:text-foreground text-xl leading-none p-0"
+          >
             ×
           </button>
         </div>
-        <div className={styles.body}>{children}</div>
+        <div className="p-5">{children}</div>
       </div>
     </div>
   );

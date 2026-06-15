@@ -1,12 +1,11 @@
 import type { JobStatus } from "../types.js";
-import styles from "./StatusBadge.module.css";
 
-const statusColors: Record<JobStatus, string> = {
-  NEW: "#6b7280",
-  ASSIGNED: "#2563eb",
-  TRANSCRIBED: "#7c3aed",
-  REVIEWED: "#d97706",
-  COMPLETED: "#16a34a",
+const statusStyles: Record<JobStatus, string> = {
+  NEW: "status-new",
+  ASSIGNED: "status-assigned",
+  TRANSCRIBED: "status-transcribed",
+  REVIEWED: "status-reviewed",
+  COMPLETED: "status-completed",
 };
 
 interface StatusBadgeProps {
@@ -16,8 +15,7 @@ interface StatusBadgeProps {
 export function StatusBadge({ status }: StatusBadgeProps) {
   return (
     <span
-      className={styles.badge}
-      style={{ background: statusColors[status] }}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusStyles[status]}`}
     >
       {status}
     </span>

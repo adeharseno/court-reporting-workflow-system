@@ -33,6 +33,34 @@ jobRouter.post("/", validate(createJobSchema), async (req, res, next) => {
   }
 });
 
+jobRouter.get("/stats", async (_req, res, next) => {
+  try {
+    const jobs = await jobService.listAll();
+    const byStatus = {
+      NEW: jobs.filter((j) => j.status === "NEW").length,
+      ASSIGNED: jobs.filter((j) => j.status === "ASSIGNED").length,
+      TRANSCRIBED: jobs.filter((j) => j.status === "TRANSCRIBED").length,
+      REVIEWED: jobs.filter((j) => j.status === "REVIEWED").length,
+      COMPLETED: jobs.filter((j) => j.status === "COMPLETED").length,
+    };
+    const revenue = jobs
+      .filter((j) => j.status === "COMPLETED")
+      .reduce(
+        (sum, j) =>
+          sum +
+          j.durationMinutes * (j.reporter?.ratePerMinute ?? 0) +
+          (j.editor?.flatFee ?? 0),
+        0,
+      );
+    res.json({
+      success: true,
+      data: { total: jobs.length, byStatus, revenue },
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 jobRouter.get("/", async (req, res, next) => {
   try {
     const page = parseInt(req.query.page as string) || 1;

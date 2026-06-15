@@ -51,6 +51,12 @@ export const api = {
       apiFetch<import("./types.js").Job[]>(
         `/jobs?page=${page}&limit=${limit}`,
       ),
+    stats: () =>
+      apiFetch<{
+        total: number;
+        byStatus: Record<string, number>;
+        revenue: number;
+      }>("/jobs/stats"),
     get: (id: number) =>
       apiFetch<import("./types.js").Job>(`/jobs/${id}`),
     create: (data: {
